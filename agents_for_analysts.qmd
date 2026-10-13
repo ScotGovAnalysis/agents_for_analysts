@@ -23,7 +23,7 @@ title: "An Introduction to Agents for Analysts"
 
 ## LLMs as the conductors of agents
 
-- Choosing tools
+- Choosing tools, returning results in natural language
 
 ## Copilot, Microsoft and agents
 
