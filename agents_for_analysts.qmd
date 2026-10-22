@@ -1,37 +1,59 @@
 ---
 title: "An Introduction to Agents for Analysts"
+format:
+   revealjs:
+      slide-number: true
 ---
 
 ## Learning objectives
 
-- Understand the difference between LLMs, agents and agentic AI
-- Understand the risks associated with agents
-- Be more critical consumers of agent outputs
-- Think about when you might want to use agents
+-   Understand the difference between LLMs, agents and agentic AI
+-   Understand the risks associated with agents
+-   Be more critical consumers of agent outputs
+-   Think about when you might want to use agents
 
 ## LLMs - overview
 
+Kaila
+
 ## How do LLMs work
+
+Kaila
 
 ## What LLMs cannot do
 
+Kaila
+
 ## Agents vs LLMs
+
+Finlay
 
 ## Agents use tools
 
-- Calculator
+Iris
+
+-   Calculator
 
 ## LLMs as the conductors of agents
 
-- Choosing tools, returning results in natural language
+Iris
+
+-   Choosing tools, returning results in natural language
+
+## Scaling up agents to agentic AI
+
+Finlay
 
 ## Copilot, Microsoft and agents
 
-- mention that we will be getting access to agents via MS, but the form of this is TBD
+Finlay
+
+-   mention that we will be getting access to agents via MS, but the form of this is TBD
 
 ## Risks
 
+Finlay
 
 ## Environmental footprint
 
-
+Iris
