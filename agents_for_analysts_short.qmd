@@ -1,0 +1,304 @@
+---
+title: "An Introduction to Agents for Analysts"
+format:
+   revealjs:
+      slide-number: true
+---
+
+## LLMs - overview
+
+- Large language models are powerful autocomplete engines
+- They use "tokens" ~ words
+- **Training** "teaches" the LLM the probabilities of associations between tokens
+- **Inference** generates a response by sequential prediction of the next token given the full context (all previous tokens) 
+
+
+## Training
+
+```{mermaid}
+
+
+%%| fig-width: 10
+%%| fig-height: 5
+%%| fig-align: center
+
+flowchart LR
+    A["Training document<br/>`An analyst examines the data`"] --> B["Tokenisation"]
+
+    B --> C["The"]
+    B --> D["analyst"]
+    B --> E["examines"]
+    B --> F["the"]
+    B --> G["data"]
+
+    C --> H["Input: The<br/>Target: analyst"]
+    D --> I["Input: The analyst<br/>Target: examines"]
+    E --> J["Input: The analyst examines<br/>Target: the"]
+    F --> K["Input: The analyst examines the<br/>Target: data"]
+
+    classDef source fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
+    classDef token fill:#FFF5D6,stroke:#B7791F,color:#1A202C
+    classDef example fill:#E6FFFA,stroke:#2C7A7B,color:#1A202C
+
+    class A,B source
+    class C,D,E,F,G token
+    class H,I,J,K example
+```
+
+## Training
+
+LLM learns the probabilities of next tokens by training on a huge corpus of data
+
+```{mermaid}
+
+flowchart LR
+    A["Input text<br/><br/>The analyst examines the"] --> B["Large language model"]
+    B --> C{"Possible next tokens"}
+    C --> D["data<br/>0.42"]
+    C --> E["results<br/>0.31"]
+    C --> F["evidence<br/>0.17"]
+    C --> G["other tokens<br/>0.10"]
+
+    classDef input fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
+    classDef model fill:#E9D8FD,stroke:#6B46C1,color:#1A202C
+    classDef output fill:#E6FFFA,stroke:#2C7A7B,color:#1A202C
+
+    class A input
+    class B model
+    class C,D,E,F,G output
+
+
+```
+
+
+## Inference
+
+
+```{mermaid}
+
+%%| fig-width: 12
+%%| fig-height: 10
+%%| fig-align: center
+
+flowchart TB
+
+    C1["Context<br/><br/>What does an analyst do?"]
+    C2["Context<br/><br/>What does an analyst do?<br/>An"]
+    C3["Context<br/><br/>What does an analyst do?<br/>An analyst"]
+    C4["Context<br/><br/>What does an analyst do?<br/>An analyst examines"]
+
+    LLM["Large Language Model"]
+
+    T1["An"]
+    T2["analyst"]
+    T3["examines"]
+    T4["data"]
+
+    C1 --> LLM
+    LLM --> T1
+
+    T1 --> C2
+    C2 --> LLM
+    LLM --> T2
+
+    T2 --> C3
+    C3 --> LLM
+    LLM --> T3
+
+    T3 --> C4
+    C4 --> LLM
+    LLM --> T4
+
+    T4 --> R["Full response<br/><br/>An analyst examines data"]
+
+    classDef input fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
+    classDef model fill:#E9D8FD,stroke:#6B46C1,color:#1A202C
+    classDef output fill:#E6FFFA,stroke:#2C7A7B,color:#1A202C
+
+    class C1,C2,C3,C4 input
+    class LLM model
+    class T1,T2,T3,T4,R output
+
+
+```
+## What LLMs can do {.smaller}
+
+
+- Generate, summarise and transform text
+- Extract themes and structured information from documents
+- Answer questions based on the data they were trained on 
+- Translate, classify and compare information
+- Generate code, analysis plans and draft reports
+- Adapt outputs to different audiences
+- Reason about problems within the information available in the prompt
+
+
+## What LLMs cannot do {.smaller}
+
+
+- Access information that is not included in their training or current context
+- Take actions in external systems
+- Search documents, emails or databases independently
+- Execute code, run analyses or interact with software tools
+- Verify whether their answers are true
+- Have memory between conversations
+- Work autonomously on multi-step tasks over extended periods
+
+. . .
+
+
+**An agent is an LLM embedded within a system that can remember, plan, use tools and take actions to achieve a goal**
+
+
+## Agents 
+
+```{mermaid}
+
+%%| fig-width: 12
+%%| fig-height: 10
+%%| fig-align: center
+
+flowchart TB
+
+    C1["Query:<br/><br/>What is the weather today in Singapore?"]
+    
+    
+
+    classDef input fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
+    classDef model fill:#E9D8FD,stroke:#6B46C1,color:#1A202C
+   
+
+    class C1 input
+
+```
+
+. . .
+
+* Today's weather not in LLM training data
+* LLM cannot answer
+
+## Agents and tools
+
+```{mermaid}
+
+%%| fig-width: 12
+%%| fig-height: 8
+%%| fig-align: center
+
+flowchart BT
+
+    A["Agent"]
+
+    
+
+    T["Tools"]
+
+    
+
+    subgraph Reasoning[" "]
+        direction LR
+        L["LLM"]
+        R["What is my goal?<br/>
+          What do I need to do?<br/>
+          What tools should I use?<br/>
+          Have I reached my goal?"]
+        L --> R
+    end
+
+    A --> L
+    A --> T
+
+    classDef input fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
+    classDef model fill:#E9D8FD,stroke:#6B46C1,color:#1A202C
+    classDef tool fill:#E6FFFA,stroke:#2C7A7B,color:#1A202C
+    classDef agent fill:#FFF5D6,stroke:#B7791F,color:#1A202C
+
+    class L model
+    class T tool
+    class A agent
+    class R input
+
+```
+
+
+## Agents{.scrollable} 
+
+```{mermaid}
+
+%%| fig-width: 12
+%%| fig-height: 6
+%%| fig-align: center
+
+flowchart TB
+
+    Q["Query:<br/><br/>What is the weather today in Singapore?"]
+    A["Agent: You are a helpful assistant <br/>
+      Tools: `get_weather`"]
+    T["get_weather: A tool that returns the current weather in a city"] 
+    L1["LLM"]
+    O1["LLM output: The user is asking for the weather<br/>I need to use the get_weather tool"]
+    T1["get_weather(Singapore)"]   
+    O2["21C, Sunny"]
+    L2["I need to tell the user it is 21C and sunny in a helpful way"]
+    O3["It is 21C and sunny in Singapore. So pack a t-shirt"]
+    
+
+    Q --> A 
+    A --> T 
+    A --> L1
+    L1 --> O1 
+    O1 --> T1
+    T1 --> O2
+    O2 --> L2
+    L2 --> O3 
+
+    classDef input fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
+    classDef model fill:#E9D8FD,stroke:#6B46C1,color:#1A202C
+    classDef tool fill:#E6FFFA,stroke:#2C7A7B,color:#1A202C
+    classDef agent fill:#FFF5D6,stroke:#B7791F,color:#1A202C
+    classDef output_final fill:#dba59e,stroke:#a32638,color:#1A202C
+    classDef output_hidden fill:#faf2f1,stroke:#a32638,color:#1A202C
+    
+    class L1,L2 model
+    class T,T1 tool
+    class A agent
+    class Q input
+    class O1,O2 output_hidden
+    class O3 output_final
+
+```
+## LLMs as the conductors of agents{.smaller}
+
+- Agents are the orchestrators
+- Agents plan, choose tools, integrate results
+- Only have access to the specified tools
+- Tools can include LLMs
+
+
+## Scaling up agents to agentic AI
+
+- Spectrum: Agents -> Agentic
+- "Agentic": autonomous actions
+- Agent tools can create other agents
+- Adaptive behaviour
+
+
+## Agents in SG
+
+- Copilot Premium to have agent feature
+- "Researcher" , "analyst" agents
+- Still black box. We do not currently have permission to create agents
+
+## Risks
+
+- Agents can interpret instructions in unexpected ways
+- Black box of hidden "outputs" means it is difficult to know what is being passed
+- Agents only have access to the tools they are given. 
+- Tools to change system can introduce risks. Need oversight points included
+
+
+
+## Environmental footprint
+
+- Standard AI queries have ~0.3Wh
+- Queries that use agentic workflows 50 -- 500Wh/workflow
