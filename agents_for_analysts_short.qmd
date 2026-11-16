@@ -5,7 +5,7 @@ format:
       slide-number: true
 ---
 
-## LLMs - overview
+## LLMs - overview {.smaller}
 
 - Large language models are powerful autocomplete engines
 - They use "tokens" ~ words
@@ -13,7 +13,7 @@ format:
 - **Inference** generates a response by sequential prediction of the next token given the full context (all previous tokens) 
 
 
-## Training
+## Training{.smaller}
 
 ```{mermaid}
 
@@ -25,16 +25,16 @@ format:
 flowchart LR
     A["Training document<br/>`An analyst examines the data`"] --> B["Tokenisation"]
 
-    B --> C["The"]
+    B --> C["An"]
     B --> D["analyst"]
     B --> E["examines"]
     B --> F["the"]
     B --> G["data"]
 
-    C --> H["Input: The<br/>Target: analyst"]
-    D --> I["Input: The analyst<br/>Target: examines"]
-    E --> J["Input: The analyst examines<br/>Target: the"]
-    F --> K["Input: The analyst examines the<br/>Target: data"]
+    C --> H["Input: An<br/>Target: analyst"]
+    D --> I["Input: An analyst<br/>Target: examines"]
+    E --> J["Input: An analyst examines<br/>Target: the"]
+    F --> K["Input: An analyst examines the<br/>Target: data"]
 
     classDef source fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
     classDef token fill:#FFF5D6,stroke:#B7791F,color:#1A202C
@@ -45,14 +45,14 @@ flowchart LR
     class H,I,J,K example
 ```
 
-## Training
+## Training{.smaller}
 
 LLM learns the probabilities of next tokens by training on a huge corpus of data
 
 ```{mermaid}
 
 flowchart LR
-    A["Input text<br/><br/>The analyst examines the"] --> B["Large language model"]
+    A["Input text<br/><br/>An analyst examines the"] --> B["Large language model"]
     B --> C{"Possible next tokens"}
     C --> D["data<br/>0.42"]
     C --> E["results<br/>0.31"]
@@ -86,13 +86,15 @@ flowchart TB
     C2["Context<br/><br/>What does an analyst do?<br/>An"]
     C3["Context<br/><br/>What does an analyst do?<br/>An analyst"]
     C4["Context<br/><br/>What does an analyst do?<br/>An analyst examines"]
-
+    C5["Context<br/><br/>What does an analyst do?<br/>An analyst examines the"]
+    
     LLM["Large Language Model"]
 
     T1["An"]
     T2["analyst"]
     T3["examines"]
-    T4["data"]
+    T4["the"]
+    T5["data"]
 
     C1 --> LLM
     LLM --> T1
@@ -108,22 +110,26 @@ flowchart TB
     T3 --> C4
     C4 --> LLM
     LLM --> T4
+    
+    T4 --> C5
+    C5 --> LLM
+    LLM --> T5
 
-    T4 --> R["Full response<br/><br/>An analyst examines data"]
+    T5 --> R["Full response<br/><br/>An analyst examines data"]
 
     classDef input fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
     classDef model fill:#E9D8FD,stroke:#6B46C1,color:#1A202C
     classDef output fill:#E6FFFA,stroke:#2C7A7B,color:#1A202C
 
-    class C1,C2,C3,C4 input
+    class C1,C2,C3,C4,C5 input
     class LLM model
-    class T1,T2,T3,T4,R output
+    class T1,T2,T3,T4,T5,R output
 
 
 ```
 ## What LLMs can do {.smaller}
 
-
+:::{.incremental}
 - Generate, summarise and transform text
 - Extract themes and structured information from documents
 - Answer questions based on the data they were trained on 
@@ -131,26 +137,26 @@ flowchart TB
 - Generate code, analysis plans and draft reports
 - Adapt outputs to different audiences
 - Reason about problems within the information available in the prompt
-
+:::
 
 ## What LLMs cannot do {.smaller}
 
-
+:::{.incremental}
 - Access information that is not included in their training or current context
 - Take actions in external systems
 - Search documents, emails or databases independently
 - Execute code, run analyses or interact with software tools
 - Verify whether their answers are true
-- Have memory between conversations
+- Have memory (beyond the conversation history)
 - Work autonomously on multi-step tasks over extended periods
-
+:::
 . . .
 
 
 **An agent is an LLM embedded within a system that can remember, plan, use tools and take actions to achieve a goal**
 
 
-## Agents 
+## Agents {.smaller}
 
 ```{mermaid}
 
@@ -175,7 +181,7 @@ flowchart TB
 . . .
 
 * Today's weather not in LLM training data
-* LLM cannot answer
+* LLM cannot answer - (but it might hallucinate!)
 
 ## Agents and tools
 
@@ -238,8 +244,8 @@ flowchart TB
     L1["LLM"]
     O1["LLM output: The user is asking for the weather<br/>I need to use the get_weather tool"]
     T1["get_weather(Singapore)"]   
-    O2["21C, Sunny"]
-    L2["I need to tell the user it is 21C and sunny in a helpful way"]
+    O2["Singapore, 21C, Sunny"]
+    L2["LLM"]
     O3["It is 21C and sunny in Singapore. So pack a t-shirt"]
     
 
@@ -250,6 +256,7 @@ flowchart TB
     O1 --> T1
     T1 --> O2
     O2 --> L2
+    A --> L2
     L2 --> O3 
 
     classDef input fill:#E8F1FA,stroke:#2B6CB0,color:#1A202C
@@ -275,7 +282,7 @@ flowchart TB
 - Tools can include LLMs
 
 
-## Scaling up agents to agentic AI
+## Scaling up agents to agentic AI{.smaller}
 
 - Spectrum: Agents -> Agentic
 - "Agentic": autonomous actions
@@ -283,22 +290,22 @@ flowchart TB
 - Adaptive behaviour
 
 
-## Agents in SG
+## Agents in SG{.smaller}
 
 - Copilot Premium to have agent feature
 - "Researcher" , "analyst" agents
 - Still black box. We do not currently have permission to create agents
 
-## Risks
+## Risks{.smaller}
 
 - Agents can interpret instructions in unexpected ways
 - Black box of hidden "outputs" means it is difficult to know what is being passed
 - Agents only have access to the tools they are given. 
-- Tools to change system can introduce risks. Need oversight points included
+- Tools that can change system can introduce risks. Need oversight points included
 
 
 
-## Environmental footprint
+## Environmental footprint{.smaller}
 
-- Standard AI queries have ~0.3Wh
+- Standard LLM chatbot queries have ~0.3Wh (~10W for 2 minutes)
 - Queries that use agentic workflows 50 -- 500Wh/workflow
