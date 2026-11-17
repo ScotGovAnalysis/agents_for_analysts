@@ -289,6 +289,12 @@ flowchart TB
 - Agent tools can create other agents
 - Adaptive behaviour
 
+## Chatbots and agents {.smaller}
+
+- Most of today's chatbots are "agents"
+- Access to some tools (Websearch, calculator, Python ...) and memory
+- You interact with the "agent" scaffold
+
 
 ## Agents in SG{.smaller}
 
